@@ -1,0 +1,68 @@
+<body></body>
+<script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library@1.0.1/build/nn.min.js"></script>
+<script>
+  nn.get('body')
+    .content('mwoah')
+    .css('background', 'purple')
+    .css('margin', 0)
+
+  let url = "https://storage.googleapis.com/cdn.patatap.com/A/"
+  
+  const svg = nn.create('svg').addTo('body')
+  
+  const clay = nn.create('audio')
+    .set('src', url + 'clay.mp3')
+    .set('preload', 'auto')
+    .set('controls', true)
+    .addTo('body')
+  const ufo = nn.create('audio')
+    .set('src', url + 'ufo.mp3')
+    .set('preload', 'auto')
+    .set('controls', true)
+    .addTo('body')
+  const bubbles = nn.create('audio')
+    .set('src', url + 'bubbles.mp3')
+    .set('preload', 'auto')
+    .set('controls', true)
+    .addTo('body')
+
+  function drop () {
+    const clr = nn.randomColor()
+    const x = nn.random(nn.width)
+    const y = nn.random(nn.height)
+    const r = nn.random(10, 100)
+    const circ = svg.circle(x, y, r).fill(clr)
+  
+    const timing = {
+      duration: 600, 
+      easing: 'ease-out'
+    }
+    const keyframes = [
+      { r: 0, opacity: 0 },
+      { r: r, opacity: 1 },
+      { r: r, opacity: 0 }
+    ]
+    const anim = circ.animate(keyframes, timing)
+    anim.onfinish = () => circ.remove()
+  }
+  
+
+  function playSound (e) {
+    if (e.key === 'y') {
+      clay.currentTime = 0
+      clay.play()
+      drop()
+    } else if (e.key === 'h') {
+      ufo.currentTime = 0
+      ufo.play()
+      drop()
+    } else if (e.key === 'n') {
+      bubbles.currentTime = 0
+      bubbles.play()
+      drop()
+    }
+
+  }
+
+  nn.on('keydown', playSound)
+</script>
