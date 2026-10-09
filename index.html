@@ -2,26 +2,50 @@
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library@1.0.1/build/nn.min.js"></script>
 <script>
   nn.get('body')
-    .content('mwoah')
+    .content('Press Y, H, N, J, and M for fun!')
+    .css('font-size', '100px')
     .css('background', 'purple')
     .css('margin', 0)
 
-  let url = "https://storage.googleapis.com/cdn.patatap.com/A/"
-  
   const svg = nn.create('svg').addTo('body')
-  
-  const clay = nn.create('audio')
-    .set('src', url + 'clay.mp3')
+    .css('z-index', 1)
+  const pick = nn.create('img').addTo('body')
+    .set('src', 'pick.png')
+    .css('position', 'absolute')
+    .css('top', '50%')
+    .css('left', '50%')
+    .css('z-index', 2)
+    .css('opacity', 0)
+  const theory = nn.create('img').addTo('body')
+    .set('src', 'game.svg')
+    .css('position', 'absolute')
+    .css('top', '50%')
+    .css('left', '50%')
+    .css('z-index', 2)
+    .css('opacity', 0)
+
+  const coin = nn.create('audio')
+    .set('src', 'coin.mp3')
     .set('preload', 'auto')
     .set('controls', true)
     .addTo('body')
-  const ufo = nn.create('audio')
-    .set('src', url + 'ufo.mp3')
+  const creeper = nn.create('audio')
+    .set('src', 'creeper.mp3')
     .set('preload', 'auto')
     .set('controls', true)
     .addTo('body')
-  const bubbles = nn.create('audio')
-    .set('src', url + 'bubbles.mp3')
+  const mark = nn.create('audio')
+    .set('src', 'mark.mp3')
+    .set('preload', 'auto')
+    .set('controls', true)
+    .addTo('body')
+  const bite = nn.create('audio')
+    .set('src', 'BITE.mp3')
+    .set('preload', 'auto')
+    .set('controls', true)
+    .addTo('body')
+  const game = nn.create('audio')
+    .set('src', 'game.mp3')
     .set('preload', 'auto')
     .set('controls', true)
     .addTo('body')
@@ -32,34 +56,102 @@
     const y = nn.random(nn.height)
     const r = nn.random(10, 100)
     const circ = svg.circle(x, y, r).fill(clr)
-  
+
     const timing = {
-      duration: 600, 
+      duration: 600,
       easing: 'ease-out'
     }
-    const keyframes = [
-      { r: 0, opacity: 0 },
-      { r: r, opacity: 1 },
-      { r: r, opacity: 0 }
+    const keyframes = [{
+        r: 0,
+        opacity: 0
+      },
+      {
+        r: r,
+        opacity: 1
+      },
+      {
+        r: r,
+        opacity: 0
+      }
     ]
     const anim = circ.animate(keyframes, timing)
     anim.onfinish = () => circ.remove()
   }
-  
+
+  function swipe () {
+    const y = nn.random(0, 80)
+    pick.css('top', y + '%')
+    const timing = {
+      duration: 3000,
+      easing: 'ease-out'
+    }
+    const keyframes = [{
+        opacity: 0,
+        transform: 'translateX(0px)'
+      },
+      {
+        opacity: 1,
+        transform: 'translateX(-300px)'
+      },
+      {
+        opacity: 1,
+        transform: 'translateX(200px)'
+      },
+      {
+        opacity: 1,
+        transform: 'translateX(-300px)'
+      },
+      {
+        opacity: 1,
+        transform: 'translateX(200px)'
+      }
+    ]
+    const anim = pick.animate(keyframes, timing)
+  }
+
+  function roll () {
+    const y = nn.random(0, 80)
+    const x = nn.random(0, 80)
+    theory.css('top', y + '%')
+    theory.css('left', y + '%')
+    const timing = {
+      duration: 1000,
+      easing: 'ease-out'
+    }
+    const keyframes = [{
+        opacity: 0,
+        transform: 'rotate(0deg)'
+      },
+      {
+        opacity: 1,
+        transform: 'rotate(180deg)'
+      },
+      {
+        opacity: 1,
+        transform: 'rotate(360deg)'
+      }
+    ]
+    const anim = theory.animate(keyframes, timing)
+  }
 
   function playSound (e) {
     if (e.key === 'y') {
-      clay.currentTime = 0
-      clay.play()
-      drop()
+      coin.currentTime = 0
+      coin.play()
     } else if (e.key === 'h') {
-      ufo.currentTime = 0
-      ufo.play()
-      drop()
+      creeper.currentTime = 0
+      creeper.play()
+      swipe()
     } else if (e.key === 'n') {
-      bubbles.currentTime = 0
-      bubbles.play()
-      drop()
+      mark.currentTime = 0
+      mark.play()
+    } else if (e.key === 'm') {
+      bite.currentTime = 0
+      bite.play()
+    } else if (e.key === 'j') {
+      game.currentTime = 0
+      game.play()
+      roll()
     }
 
   }
