@@ -42,6 +42,19 @@
     .css('left', '50%')
     .css('z-index', 2)
     .css('opacity', 0)
+  const marioCoin = nn.create('img').addTo('body')
+    .set('src', 'coin.png')
+    .css('position', 'absolute')
+    .css('top', '0%')
+    .css('left', '0%')
+    .css('opacity', 0)
+    .css('z-index', 2)
+  const keys = nn.create('img').addTo('body')
+    .set('src', 'keys.png')
+    .css('position', 'absolute')
+    .css('top', '25%')
+    .css('left', '0%')
+    .css('z-index', 1)
 
   const coin = nn.create('audio')
     .set('src', 'coin.mp3')
@@ -196,11 +209,33 @@
     ]
     const anim = theory.animate(keyframes, timing)
   }
+  
+  function coinPunch(){
+    const timing = {
+      duration: 600,
+      easing: 'ease-out'
+    }
+    const keyframes = [{
+        opacity: 0,
+        transform: 'translateY(0px)'
+      },
+      {
+        opacity: 1,
+        transform: 'translateY(-300px)'
+      },
+      {
+        opacity: 1,
+        transform: 'translateY(200px)'
+      },
+    ]
+    const anim = marioCoin.animate(keyframes, timing)
+  }
 
   function playSound (e) {
     if (e.key === 'y') {
       coin.currentTime = 0
       coin.play()
+      coinPunch()
     } else if (e.key === 'h') {
       creeper.currentTime = 0
       creeper.play()
