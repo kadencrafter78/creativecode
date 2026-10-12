@@ -2,10 +2,12 @@
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library@1.0.1/build/nn.min.js"></script>
 <script>
   nn.get('body')
-    .content('Press Y, H, N, J, and M for fun!')
-    .css('font-size', '100px')
+    .content('PATATAP GAMER EDITON')
+    .css('font-size', '60px')
     .css('background', 'purple')
     .css('margin', 0)
+
+  let portalNum = 1;
 
   const svg = nn.create('svg').addTo('body')
     .css('z-index', 1)
@@ -18,6 +20,20 @@
     .css('opacity', 0)
   const theory = nn.create('img').addTo('body')
     .set('src', 'game.svg')
+    .css('position', 'absolute')
+    .css('top', '50%')
+    .css('left', '50%')
+    .css('z-index', 2)
+    .css('opacity', 0)
+  const portalBlue = nn.create('img').addTo('body')
+    .set('src', 'portalblue.png')
+    .css('position', 'absolute')
+    .css('top', '50%')
+    .css('left', '50%')
+    .css('z-index', 2)
+    .css('opacity', 0)
+  const portalOrange = nn.create('img').addTo('body')
+    .set('src', 'portalorange.png')
     .css('position', 'absolute')
     .css('top', '50%')
     .css('left', '50%')
@@ -49,6 +65,11 @@
     .set('preload', 'auto')
     .set('controls', true)
     .addTo('body')
+  const portal = nn.create('audio')
+    .set('src', 'portal.mp3')
+    .set('preload', 'auto')
+    .set('controls', true)
+    .addTo('body')
 
   function drop () {
     const clr = nn.randomColor()
@@ -76,6 +97,51 @@
     ]
     const anim = circ.animate(keyframes, timing)
     anim.onfinish = () => circ.remove()
+  }
+
+
+  function portalFunc () {
+    const y = nn.random(0, 50)
+    const x = nn.random(0, 80)
+    if (portalNum === 1) {
+      portalBlue.css('top', y + '%')
+      portalBlue.css('left', x + '%')
+      const timing = {
+        duration: 600,
+        easing: 'ease-out'
+      }
+      const keyframes = [{
+          opacity: 0
+        },
+        {
+          opacity: 1
+        },
+        {
+          opacity: 0
+        }
+      ]
+      const anim = portalBlue.animate(keyframes, timing)
+    }
+    if (portalNum === -1) {
+      portalOrange.css('top', y + '%')
+      portalOrange.css('left', x + '%')
+      const timing = {
+        duration: 600,
+        easing: 'ease-out'
+      }
+      const keyframes = [{
+          opacity: 0
+        },
+        {
+          opacity: 1
+        },
+        {
+          opacity: 0
+        }
+      ]
+      const anim = portalOrange.animate(keyframes, timing)
+    }
+    portalNum *= -1;
   }
 
   function swipe () {
@@ -152,6 +218,10 @@
       game.currentTime = 0
       game.play()
       roll()
+    } else if (e.key === 'u') {
+      portal.currentTime = 0
+      portal.play()
+      portalFunc()
     }
 
   }
