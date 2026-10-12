@@ -25,7 +25,7 @@
     .css('z-index', 2)
     .css('opacity', 0)
   const theory = nn.create('img').addTo('body')
-    .set('src', 'game.svg')
+    .set('src', 'game.png')
     .css('position', 'absolute')
     .css('top', '50%')
     .css('left', '50%')
@@ -162,12 +162,12 @@
   }
 
   function roll () {
-    const y = nn.random(0, 80)
-    const x = nn.random(0, 80)
+    const y = nn.random(0, 50)
+    const x = nn.random(0, 50)
     theory.css('top', y + '%')
-    theory.css('left', y + '%')
+    theory.css('left', x + '%')
     const timing = {
-      duration: 1000,
+      duration: 1500,
       easing: 'ease-out'
     }
     const keyframes = [{
